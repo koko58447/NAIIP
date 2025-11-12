@@ -1,0 +1,7 @@
+{
+  "name": "AI Service System",
+  "description": "A web application to transcribe Myanmar language audio using file upload or real-time microphone recording.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
