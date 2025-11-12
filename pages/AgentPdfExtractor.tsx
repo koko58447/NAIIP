@@ -90,7 +90,7 @@ const AgentPdfExtractor: React.FC<{ onNavigateBack: () => void; }> = ({ onNaviga
                     <button onClick={onNavigateBack} className="absolute left-0 top-1/2 -translate-y-1/2 p-2 rounded-full hover:bg-gray-700" aria-label={t('back')}>
                         <ArrowLeftIcon className="w-6 h-6" />
                     </button>
-                    <h1 className="text-4xl font-extrabold text-white mb-2">
+                    <h1 className="text-4xl font-extrabold text-white mb-2 p-3">
                         {/* FIX: Use the new, non-conflicting translation key for the page title. */}
                         <span className="text-indigo-500">AI</span> {t('agentPdfPageTitle')}
                     </h1>

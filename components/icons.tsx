@@ -67,9 +67,21 @@ export const CheckIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
 
 export const LanguageIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
     <Icon {...props}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="m10.5 21 5.25-11.25L21 21m-9-3h7.5M3 5.621a48.474 48.474 0 0 1 6-.371m0 0c1.12 0 2.233.038 3.334.114M9 5.25V3m3.334 2.364C13.18 7.061 14.122 8 15 8s1.82-.939 2.666-2.636m-1.114 0a48.47 0 0 0-6.338 0" />
+      {/* Background speech bubble path */}
+      <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 2.25h6.5a1.5 1.5 0 0 1 1.5 1.5v6.25a1.5 1.5 0 0 1-1.5 1.5H9.375l-2.625 2.625V11.5a1.5 1.5 0 0 1-1.5-1.5V3.75a1.5 1.5 0 0 1 1.5-1.5z" />
+      {/* '文' character path approximation */}
+      <path strokeLinecap="round" strokeLinejoin="round" d="M9 5.25h2.25" />
+      <path strokeLinecap="round" strokeLinejoin="round" d="M10.125 4.125v3.375" />
+      <path strokeLinecap="round" strokeLinejoin="round" d="m9.375 8.25 1.125 1.125" />
+      <path strokeLinecap="round" strokeLinejoin="round" d="m11.625 8.25-1.125 1.125" />
+  
+      {/* Foreground speech bubble path */}
+      <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 7.5h-6.5a1.5 1.5 0 0 0-1.5 1.5v6.25a1.5 1.5 0 0 0 1.5 1.5h3.375l2.625 2.625V16.75a1.5 1.5 0 0 0 1.5-1.5V9a1.5 1.5 0 0 0-1.5-1.5z" />
+      {/* 'A' character path approximation */}
+      <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 14.25 14.625 11.25l1.125 3" />
+      <path strokeLinecap="round" strokeLinejoin="round" d="M13.875 13.125h1.5" />
     </Icon>
-);
+  );
 
 export const ArrowLeftIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
   <Icon {...props}>
@@ -162,5 +174,13 @@ export const ChatBubbleLeftRightIcon: React.FC<React.SVGProps<SVGSVGElement>> = 
     <Icon {...props}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193l-3.722.25c-.347.023-.682-.123-.884-.386a1.5 1.5 0 0 1-.44-1.298v-3.21c0-.825.5-1.56 1.25-1.848l3.752-1.431ZM14.25 18.169V6.432c0-1.136.847-2.1 1.98-2.193l3.722-.25c.347-.023.682.123.884.386a1.5 1.5 0 0 1 .44 1.298v3.21c0 .825-.5 1.56-1.25 1.848l-3.752 1.431A1.5 1.5 0 0 1 14.25 18.169Z" />
         <path strokeLinecap="round" strokeLinejoin="round" d="M4.125 8.169V5.432c0-1.136.847-2.1 1.98-2.193l3.722-.25c.347-.023.682.123.884.386a1.5 1.5 0 0 1 .44 1.298v3.21c0 .825-.5 1.56-1.25 1.848l-3.752 1.431A1.5 1.5 0 0 1 4.125 8.169Z" />
+    </Icon>
+);
+
+export const ScaleIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+    <Icon {...props}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 12c0-1.84 1.5-3.35 3.35-3.35h.15a2.5 2.5 0 0 1 0 5h-.15C18 13.65 16.5 12.16 16.5 12Z"/>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M7.5 12c0-1.84-1.5-3.35-3.35-3.35H4a2.5 2.5 0 0 0 0 5h.15C6 13.65 7.5 12.16 7.5 12Z"/>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 6V3"/><path d="M12 21v-9"/><path d="M12 12H4.5M12 12h7.5"/>
     </Icon>
 );

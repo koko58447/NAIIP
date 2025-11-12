@@ -54,7 +54,8 @@ const CorrectionSpan: React.FC<{ word: string; correction: string; onClick: () =
 
 export default function ASR({ onNavigateBack }: ASRProps) {
     const { t } = useTranslation();
-    const [transcription, setTranscription] = useState<string>('');
+    const [fullTranscription, setFullTranscription] = useState<string>('');
+    const [displayedTranscription, setDisplayedTranscription] = useState('');
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
     const [recordingState, setRecordingState] = useState<RecordingState>(RecordingState.INACTIVE);
@@ -77,20 +78,30 @@ export default function ASR({ onNavigateBack }: ASRProps) {
         };
     }, [audioUrl]);
 
+    // Typing effect for transcription
+    useEffect(() => {
+        if (fullTranscription.length > displayedTranscription.length) {
+            const timeout = setTimeout(() => {
+                setDisplayedTranscription(fullTranscription.substring(0, displayedTranscription.length + 1));
+            }, 3); // Adjust speed of typing here
+            return () => clearTimeout(timeout);
+        }
+    }, [fullTranscription, displayedTranscription]);
+
 
     const handleTranscribe = useCallback(async (audioBlob: Blob) => {
         setIsLoading(true);
         setError(null);
-        setTranscription('');
+        setFullTranscription('');
+        setDisplayedTranscription('');
         setCorrections([]);
         if (audioUrl) {
             URL.revokeObjectURL(audioUrl);
         }
         setAudioUrl(URL.createObjectURL(audioBlob));
 
-
         const onChunk = (chunk: string) => {
-            setTranscription(prev => prev + chunk);
+            setFullTranscription(prev => prev + chunk);
         };
 
         const onComplete = () => {
@@ -135,7 +146,8 @@ export default function ASR({ onNavigateBack }: ASRProps) {
             recorder.start();
             setRecordingState(RecordingState.RECORDING);
             setError(null);
-            setTranscription('');
+            setFullTranscription('');
+            setDisplayedTranscription('');
             setCorrections([]);
             setAudioUrl(null);
         } catch (err) {
@@ -196,8 +208,8 @@ export default function ASR({ onNavigateBack }: ASRProps) {
     };
 
     const handleCopy = useCallback(() => {
-        if (transcription) {
-            navigator.clipboard.writeText(transcription)
+        if (fullTranscription) {
+            navigator.clipboard.writeText(fullTranscription)
                 .then(() => {
                     setJustCopied(true);
                     setTimeout(() => setJustCopied(false), 2000);
@@ -207,34 +219,33 @@ export default function ASR({ onNavigateBack }: ASRProps) {
                     setError(t('mtCopyError'));
                 });
         }
-    }, [transcription, t]);
+    }, [fullTranscription, t]);
 
     const handleSpellCheck = useCallback(async () => {
-        if (!transcription || isCheckingSpelling) return;
+        if (!fullTranscription || isCheckingSpelling) return;
         setIsCheckingSpelling(true);
         setError(null);
         try {
-            const result = await spellCheckText(transcription);
+            const result = await spellCheckText(fullTranscription);
             setCorrections(result);
         } catch (e: any) {
             setError(e.message);
         } finally {
             setIsCheckingSpelling(false);
         }
-    }, [transcription, isCheckingSpelling]);
+    }, [fullTranscription, isCheckingSpelling]);
     
     const handleCorrectionClick = useCallback((original: string, correction: string) => {
-        // FIX: Use `split` and `join` to ensure all instances of an error are corrected, not just the first one, for wider compatibility.
-        setTranscription(prev => prev.split(original).join(correction));
+        setFullTranscription(prev => prev.split(original).join(correction));
         setCorrections(prev => prev.filter(c => c.original !== original));
     }, []);
 
     const renderedText = useMemo(() => {
-        if (corrections.length === 0) return transcription;
+        if (corrections.length === 0) return displayedTranscription;
         
         const escapeRegex = (str: string) => str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
         const regex = new RegExp(`(${corrections.map(c => escapeRegex(c.original)).join('|')})`, 'g');
-        const parts = transcription.split(regex).filter(part => part);
+        const parts = displayedTranscription.split(regex).filter(part => part);
 
         return parts.map((part, index) => {
             const correction = corrections.find(c => c.original === part);
@@ -250,7 +261,7 @@ export default function ASR({ onNavigateBack }: ASRProps) {
             }
             return <span key={index}>{part}</span>;
         });
-    }, [transcription, corrections, handleCorrectionClick]);
+    }, [displayedTranscription, corrections, handleCorrectionClick]);
 
 
     return (
@@ -260,7 +271,7 @@ export default function ASR({ onNavigateBack }: ASRProps) {
                      <button onClick={onNavigateBack} className="absolute left-0 top-1/2 -translate-y-1/2 p-2 rounded-full hover:bg-gray-700 transition-colors" aria-label={t('backToDashboard')}>
                         <ArrowLeftIcon className="w-6 h-6" />
                     </button>
-                    <h1 className="text-3xl sm:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 pb-2 to-teal-500">
+                    <h1 className="text-3xl sm:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 p-3 to-teal-500">
                         {t('asrPageTitle')}
                     </h1>
                     <p className="text-gray-400 mt-2">{t('asrPageSubtitle')}</p>
@@ -320,7 +331,7 @@ export default function ASR({ onNavigateBack }: ASRProps) {
                 <div className="bg-gray-800/50 border border-gray-700 rounded-2xl p-6 shadow-2xl backdrop-blur-sm min-h-[350px]">
                     <div className="flex justify-between items-center mb-4">
                          <h2 className="text-xl font-bold text-cyan-400">{t('asrResultHeader')}</h2>
-                         {transcription && (
+                         {fullTranscription && (
                             <div className="flex items-center space-x-2">
                                 <button
                                     onClick={handleSpellCheck}
@@ -329,7 +340,7 @@ export default function ASR({ onNavigateBack }: ASRProps) {
                                     className="p-2 rounded-full text-gray-400 hover:bg-gray-700 hover:text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                                     aria-label={t('asrSpellCheck')}
                                 >
-                                    {isCheckingSpelling ? <LoaderIcon className="w-5 h-5" /> : <LanguageIcon className="w-5 h-5" />}
+                                    {isCheckingSpelling ? <LoaderIcon className="w-8 h-8 text-cyan-400" /> : <LanguageIcon className="w-8 h-8 text-cyan-400" />}
                                 </button>
                                 <button
                                     onClick={handleCopy}
@@ -337,23 +348,23 @@ export default function ASR({ onNavigateBack }: ASRProps) {
                                     className="p-2 rounded-full text-gray-400 hover:bg-gray-700 hover:text-white transition-colors"
                                     aria-label="Copy text"
                                 >
-                                    {justCopied ? <CheckIcon className="w-5 h-5 text-green-400" /> : <CopyIcon className="w-5 h-5" />}
+                                    {justCopied ? <CheckIcon className="w-5 h-5 text-green-400" /> : <CopyIcon className="w-8 h-8 text-cyan-400" />}
                                 </button>
                             </div>
                         )}
                     </div>
                      <div className="w-full bg-gray-900/70 rounded-lg min-h-[250px] text-gray-300 text-lg leading-relaxed border border-gray-600 flex flex-col">
-                        {(isLoading && !transcription) || error ? (
+                        {(isLoading && !displayedTranscription) || error ? (
                              <div className="flex-grow flex items-center justify-center">
-                                <StatusIndicator isLoading={isLoading && !transcription} error={error} />
+                                <StatusIndicator isLoading={isLoading && !displayedTranscription} error={error} />
                             </div>
                         ) : (
-                            <div className="w-full h-full flex-grow appearance-none resize-none border-none focus:outline-none focus:ring-0 text-gray-300 text-lg leading-relaxed p-4 whitespace-pre-wrap">
-                              {transcription ? renderedText : <span className="text-gray-500">{t('asrPlaceholder')}</span>}
+                            <div className="w-full h-full flex-grow appearance-none resize-none border-none focus:outline-none focus:ring-0 text-gray-300 text-xl leading-relaxed p-4 whitespace-pre-wrap">
+                              {displayedTranscription ? renderedText : <span className="text-gray-500">{t('asrPlaceholder')}</span>}
                             </div>
                         )}
                     </div>
-                     {audioUrl && !isLoading && (
+                     {audioUrl && (
                         <div className="mt-4">
                             <audio controls src={audioUrl} className="w-full h-10 rounded-lg">
                                 {t('asrAudioError')}

@@ -58,7 +58,7 @@ const AgentMachineTranslation: React.FC<AgentMachineTranslationProps> = ({ onNav
                     <button onClick={onNavigateBack} className="absolute left-0 top-1/2 -translate-y-1/2 p-2 rounded-full hover:bg-gray-700" aria-label={t('back')}>
                         <ArrowLeftIcon className="w-6 h-6" />
                     </button>
-                    <h1 className="text-3xl sm:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-500">
+                    <h1 className="text-3xl sm:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 p-3 to-pink-500">
                         {t('agentMtTitle')}
                     </h1>
                     <p className="text-gray-400 mt-2">{t('agentMtSubtitle')}</p>

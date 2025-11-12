@@ -8,7 +8,9 @@ import {
     DocumentScanIcon,
     LanguageIcon,
     MicIcon,
-    ClipboardDocumentListIcon
+    ClipboardDocumentListIcon,
+    ScaleIcon,
+    ChatBubbleLeftRightIcon
 } from '../components/icons';
 import ServiceCard from '../components/ServiceCard';
 import { Page } from '../App';
@@ -29,7 +31,7 @@ const AIAgent: React.FC<AIAgentProps> = ({ onNavigateBack, onNavigate }) => {
                      <button onClick={onNavigateBack} className="absolute left-0 top-1/2 -translate-y-1/2 p-2 rounded-full hover:bg-gray-700 transition-colors" aria-label={t('backToDashboard')}>
                         <ArrowLeftIcon className="w-6 h-6" />
                     </button>
-                    <h1 className="text-4xl sm:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-500">
+                    <h1 className="text-4xl sm:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 p-3 to-pink-500">
                         {t('agentPageTitle')}
                     </h1>
                     <p className="text-gray-400 mt-4 text-lg">{t('agentPageSubtitle')}</p>
@@ -72,6 +74,12 @@ const AIAgent: React.FC<AIAgentProps> = ({ onNavigateBack, onNavigate }) => {
                         icon={<MicIcon className="w-8 h-8 text-purple-400" />}
                         onClick={() => onNavigate('AGENT_SPEECH_TO_TEXT')}
                     />
+                     <ServiceCard
+                        title={t('agentS2sTitle')}
+                        description={t('agentS2sDesc')}
+                        icon={<ChatBubbleLeftRightIcon className="w-8 h-8 text-purple-400" />}
+                        onClick={() => onNavigate('AGENT_SPEECH_TO_SPEECH')}
+                    />
                     <ServiceCard
                         title={t('agentTtsTitle')}
                         description={t('agentTtsDesc')}
@@ -89,6 +97,12 @@ const AIAgent: React.FC<AIAgentProps> = ({ onNavigateBack, onNavigate }) => {
                         description={t('agentPdfDesc')}
                         icon={<ClipboardDocumentListIcon className="w-8 h-8 text-purple-400" />}
                         onClick={() => onNavigate('AGENT_PDF_EXTRACTOR')}
+                    />
+                     <ServiceCard
+                        title={t('agentLawAITitle')}
+                        description={t('agentLawAIDesc')}
+                        icon={<ScaleIcon className="w-8 h-8 text-purple-400" />}
+                        onClick={() => onNavigate('AGENT_LAW_AI')}
                     />
                 </div>
             </div>

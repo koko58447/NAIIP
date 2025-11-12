@@ -16,9 +16,11 @@ import AgentSpeechToText from './pages/AgentSpeechToText';
 import AgentTextToSpeech from './pages/AgentTextToSpeech';
 import AgentNaming from './pages/AgentNaming';
 import AgentPdfExtractor from './pages/AgentPdfExtractor';
+import AgentLawAI from './pages/AgentLawAI';
+import AgentSpeechToSpeech from './pages/AgentSpeechToSpeech';
 import { LanguageProvider } from './contexts/LanguageContext';
 
-export type Page = 'DASHBOARD' | 'ASR' | 'TRANSLATE' | 'OLD_SPELLCHECK' | 'TTS' | 'OCR' | 'AGENT' | 'GEMINI_SPELLCHECK' | 'SUMMARIZE' | 'AGENT_OCR' | 'AGENT_TRANSLATE' | 'SPEECH_TRANSLATE' | 'AGENT_SPEECH_TO_TEXT' | 'AGENT_TEXT_TO_SPEECH' | 'AGENT_NAMING' | 'AGENT_PDF_EXTRACTOR';
+export type Page = 'DASHBOARD' | 'ASR' | 'TRANSLATE' | 'OLD_SPELLCHECK' | 'TTS' | 'OCR' | 'AGENT' | 'GEMINI_SPELLCHECK' | 'SUMMARIZE' | 'AGENT_OCR' | 'AGENT_TRANSLATE' | 'SPEECH_TRANSLATE' | 'AGENT_SPEECH_TO_TEXT' | 'AGENT_TEXT_TO_SPEECH' | 'AGENT_NAMING' | 'AGENT_PDF_EXTRACTOR' | 'AGENT_LAW_AI' | 'AGENT_SPEECH_TO_SPEECH';
 
 export default function App() {
     const [currentPage, setCurrentPage] = useState<Page>('DASHBOARD');
@@ -56,6 +58,10 @@ export default function App() {
                 return <AgentNaming onNavigateBack={() => navigateTo('AGENT')} />;
             case 'AGENT_PDF_EXTRACTOR':
                 return <AgentPdfExtractor onNavigateBack={() => navigateTo('AGENT')} />;
+            case 'AGENT_LAW_AI':
+                return <AgentLawAI onNavigateBack={() => navigateTo('AGENT')} />;
+            case 'AGENT_SPEECH_TO_SPEECH':
+                return <AgentSpeechToSpeech onNavigateBack={() => navigateTo('AGENT')} />;
             case 'AGENT':
                 return <AIAgent onNavigateBack={navigateBack} onNavigate={navigateTo} />;
             case 'DASHBOARD':

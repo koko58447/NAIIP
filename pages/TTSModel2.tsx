@@ -19,10 +19,18 @@ const TTSModel2: React.FC<TTSModel2Props> = ({ onNavigateBack }) => {
     // New state for controls
     const [removeSilence, setRemoveSilence] = useState(true);
     const [speed, setSpeed] = useState(1.0);
-    const [phraseLimit, setPhraseLimit] = useState(50);
+    const [phraseLimit, setPhraseLimit] = useState(8);
     
     const originalTextRef = useRef('');
     const modelDisplayName = t('ttsModel2Name');
+
+    const exampleText = "နှစ် နှစ်သောင်းကျင့်ထားပါလျှက်နဲ့ နိဗ္ဗာန်ခရီးဖြောင့်ရဲ့လား။ ဒီရုပ်နာမ် အဆက်ဆက်တို့ရဲ့ တစ်ခုစီတစ်ခုစီဟာလေ မန္တပါရဂူ ဗေဒင်သုံးပုံကို တစ်ဖက်ကမ်းခတ် တတ်မြောက်တော်မှုသော သတ္တက္ခတ္တု ပရမ သောတာပန် အညံ့စားဆိုတော့";
+
+    const handleExampleClick = (text: string) => {
+        setInputText(text);
+        setResult(null);
+        setError(null);
+    };
 
     const handleGenerate = useCallback(async () => {
         if (!inputText.trim() || isLoading) return;
@@ -58,7 +66,7 @@ const TTSModel2: React.FC<TTSModel2Props> = ({ onNavigateBack }) => {
                     <button onClick={onNavigateBack} className="absolute left-0 top-1/2 -translate-y-1/2 p-2 rounded-full hover:bg-gray-700 transition-colors" aria-label={t('backToTTS')}>
                         <ArrowLeftIcon className="w-6 h-6" />
                     </button>
-                    <h1 className="inline-block text-3xl sm:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 leading-relaxed to-teal-500 pb-2">
+                    <h1 className="inline-block text-3xl sm:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 leading-relaxed to-teal-500 p-3">
                         {t('ttsModelTitlePrefix')} {modelDisplayName}
                     </h1>
                 </div>
@@ -72,6 +80,18 @@ const TTSModel2: React.FC<TTSModel2Props> = ({ onNavigateBack }) => {
                         className="w-full h-48 p-4 bg-gray-800/60 border border-gray-700 rounded-xl resize-y focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-colors text-lg"
                         readOnly={isLoading}
                     />
+                </div>
+
+                <div className="w-full space-y-2">
+                    <h3 className="text-lg font-medium text-gray-300">{t('ttsExampleText')}</h3>
+                    <div 
+                        onClick={() => handleExampleClick(exampleText)}
+                        className="p-4 bg-gray-800/60 border border-gray-700 rounded-xl cursor-pointer hover:bg-gray-700/70 transition-colors"
+                        role="button"
+                        aria-label="Use example text"
+                    >
+                        <p className="text-gray-400 text-base leading-relaxed">{exampleText}</p>
+                    </div>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 bg-gray-800/50 p-4 rounded-xl border border-gray-700">

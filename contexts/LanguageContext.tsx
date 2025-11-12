@@ -16,7 +16,7 @@ const translations = {
     ttsDescription: "Convert Burmese text into natural-sounding speech.",
     ocrTitle: "Myanmar OCR",
     ocrDescription: "Extract text from Burmese images.",
-    spellcheckTitle: "Spell Check",
+    spellcheckTitle: "Myanmar Spellchecking System",
     spellcheckDescription: "Correct basic spelling mistakes in text.",
     agentTitle: "AI Agent Bot",
     agentDescription: "Access a suite of specialized AI assistants.",
@@ -37,11 +37,11 @@ const translations = {
     asrStopRecording: "Stop recording",
     asrStartRecording: "Start recording",
     asrResultHeader: "Transcription Result",
-    asrSpellCheck: "Spell Check",
+    asrSpellCheck: "Myanmar Spellchecking System",
     asrCopyToClipboard: "Copy to Clipboard",
     asrPlaceholder: "Your transcribed text will appear here...",
     asrAudioError: "Your browser does not support the audio element.",
-    asrFooter: "© 2024 AI-Powered Transcription. All rights reserved.",
+    asrFooter: "© 2025 Created by NAIIP. All rights reserved.",
     asrMicError: "Microphone access was denied. Please allow microphone access in your browser settings.",
     asrFileError: "Please drop an audio file.",
     // Machine Translate Page
@@ -56,7 +56,8 @@ const translations = {
     mtSwap: "Swap languages",
     mtCopy: "Copy translated text",
     mtCopyError: "Could not copy text to clipboard.",
-    mtFooter: "© 2024 AI-Powered Translation. All rights reserved.",
+    mtFooter: "© 2025 Created by NAIIP. All rights reserved.",
+    mtExampleText: "Example Texts",
     // Spellcheck Page (Gemini)
     spellcheckPageTitle: "Spell & Grammar Checker",
     spellcheckPageSubtitle: "Check for spelling mistakes with Gemini AI",
@@ -66,7 +67,8 @@ const translations = {
     spellcheckResultHeader: "Text to Correct",
     spellcheckCopy: "Copy Corrected Text",
     spellcheckLoading: "Checking with Gemini AI...",
-    spellcheckFooter: "© 2024 Gemini-Powered Spell Check. All rights reserved.",
+    spellcheckFooter: "© 2025 Created by NAIIP. All rights reserved.",
+    spellcheckExampleText: "Example Texts",
     // TTS Dashboard
     ttsDashboardTitle: "Text-to-Speech (TTS)",
     ttsDashboardSubtitle: "Select a voice model to generate speech.",
@@ -86,6 +88,7 @@ const translations = {
     ttsGenerateButton: "Generate Speech",
     ttsResultHeader: "Generated Audio",
     ttsLoadingPlaceholder: "Please wait....",
+    ttsExampleText: "Example Text",
     ttsGender: "Gender",
     ttsMale: "Male",
     ttsFemale: "Female",
@@ -103,7 +106,7 @@ const translations = {
     ocrSuccessMessage: "Successfully extracted text from the image.",
     ocrClearedMessage: "All fields cleared.",
     ocrFileError: "Please select an image file.",
-    ocrFooter: "© 2024 AI-Powered OCR. All rights reserved.",
+    ocrFooter: "© 2025 Created by NAIIP. All rights reserved.",
     // AI Agent Dashboard
     agentPageTitle: "AI Agent Bot",
     agentPageSubtitle: "Your suite of specialized AI assistants.",
@@ -125,12 +128,16 @@ const translations = {
     agentNamingDesc: "Generate Burmese names based on traditions.",
     agentPdfTitle: "PDF Extractor",
     agentPdfDesc: "Extract text and insights from PDF documents.",
+    agentLawAITitle: "Myanmar Law AI Chatbot",
+    agentLawAIDesc: "Ask legal questions about Myanmar law.",
+    agentS2sTitle: "Speech to Speech",
+    agentS2sDesc: "Translate spoken language into another.",
     // Old Spellcheck Page
-    oldSpellcheckTitle: "Spell Check",
+    oldSpellcheckTitle: "Myanmar Spellchecking System",
     oldSpellcheckSubtitle: "Checks for spelling mistakes.",
     oldSpellcheckResultHeader: "Corrected Text",
     oldSpellcheckLoading: "Checking for corrections...",
-    oldSpellcheckFooter: "© 2024 Spell Check Service. All rights reserved.",
+    oldSpellcheckFooter: "© 2025 Created by NAIIP. All rights reserved.",
     // Summarize Page
     summarizeTitle: "Myanmar Summarization",
     summarizeSubtitle: "Summarize long texts with Gemini AI",
@@ -139,9 +146,8 @@ const translations = {
     summarizeButton: "Summarize Text",
     summarizeResultHeader: "Summary",
     summarizeLoading: "Summarizing with Gemini AI...",
-    summarizeFooter: "© 2024 Gemini-Powered Summarization. All rights reserved.",
+    summarizeFooter: "© 2025 Created by NAIIP. All rights reserved.",
     // Agent OCR
-// FIX: Renamed `agentOcrTitle` to `agentOcrPageTitle` to resolve duplicate key error.
     agentOcrPageTitle: "Myanmar OCR (Gemini)",
     agentOcrSubtitle: "Extract Burmese text from images using AI.",
     agentOcrUploadImageLabel: "1. Upload an Image",
@@ -220,7 +226,6 @@ const translations = {
     agentNameErrorPrompt: "Date of Birth, Gender, and Syllable Count (at least 1) are required.",
     agentNameErrorApi: "Name generation error:",
     // Agent PDF Extractor
-// FIX: Renamed `agentPdfTitle` to `agentPdfPageTitle` to resolve duplicate key error.
     agentPdfPageTitle: "AI PDF Extractor (Burmese)",
     agentPdfSubtitle: "*** Please use a VPN before proceeding ***",
     agentPdfUploadLabel: "Upload PDF (Max ~10MB)",
@@ -241,6 +246,19 @@ const translations = {
     agentPdfExtractButton: "Extract Content",
     agentPdfDownloadButton: "Download Word File (.doc)",
     agentPdfResultPlaceholder: "The extracted content will appear here...",
+    // Law AI Chatbot
+    agentLawAIPageTitle: "Myanmar Law AI Chatbot",
+    agentLawAIWelcome: "Hello! I am the Myanmar Law AI Chatbot. You can ask me about the laws of Myanmar.",
+    agentLawAIPlaceholder: "Ask legal questions...",
+    agentLawAIError: "Sorry, an error occurred. Please try again in a moment.",
+    // Agent Speech to Speech
+    agentS2sPageTitle: "Speech to Speech Translation",
+    agentS2sPageSubtitle: "Translate your voice from one language to another using Gemini.",
+    agentS2sProcessButton: "Translate Speech",
+    agentS2sProcessingButton: "Translating...",
+    agentS2sTranscription: "Transcription",
+    agentS2sTranslation: "Translation Text",
+    agentS2sResultHeader: "Translated Audio",
   },
   my: {
     headerTitle: "NAIIP",
@@ -282,7 +300,7 @@ const translations = {
     asrCopyToClipboard: "ကူးယူရန်",
     asrPlaceholder: "သင်၏ စာသားများ ဤနေရာတွင် ပေါ်လာမည်...",
     asrAudioError: "သင်၏ browser သည် audio element ကို အထောက်အပံ့မပေးပါ။",
-    asrFooter: "© 2024 AI-Powered Transcription. All rights reserved.",
+    asrFooter:  "© 2025 Created by NAIIP. All rights reserved.",
     asrMicError: "မိုက်ခရိုဖုန်း အသုံးပြုခွင့်ကို ပယ်ချခဲ့သည်။ ကျေးဇူးပြု၍ သင်၏ browser ဆက်တင်များတွင် မိုက်ခရိုဖုန်း အသုံးပြုခွင့်ကို ခွင့်ပြုပါ။",
     asrFileError: "ကျေးဇူးပြု၍ အသံဖိုင်တစ်ခု ထည့်ပါ။",
     // Machine Translate Page
@@ -297,7 +315,8 @@ const translations = {
     mtSwap: "ဘာသာစကားများ လဲလှယ်ရန်",
     mtCopy: "ဘာသာပြန်စာသားကို ကူးယူရန်",
     mtCopyError: "စာသားကို ကူးယူ၍မရပါ။",
-    mtFooter: "© 2024 AI-Powered Translation. All rights reserved.",
+    mtFooter:  "© 2025 Created by NAIIP. All rights reserved.",
+    mtExampleText: "နမူနာ စာသားများ",
     // Spellcheck Page (Gemini)
     spellcheckPageTitle: "သတ်ပုံနှင့် သဒ္ဒါစစ်ဆေးခြင်း",
     spellcheckPageSubtitle: "သတ်ပုံအမှားများကို Gemini AI ဖြင့်စစ်ဆေးပေးသည်",
@@ -307,7 +326,8 @@ const translations = {
     spellcheckResultHeader: "ပြင်ဆင်ရန်စာသား",
     spellcheckCopy: "ပြင်ဆင်ပြီးစာသားကို ကူးယူရန်",
     spellcheckLoading: "Gemini AI ဖြင့် စစ်ဆေးနေသည်...",
-    spellcheckFooter: "© 2024 Gemini-Powered Spell Check. All rights reserved.",
+    spellcheckFooter: "© 2025 Created by NAIIP. All rights reserved.",
+    spellcheckExampleText: "နမူနာ စာသားများ",
     // TTS Dashboard
     ttsDashboardTitle: "စာသားမှ အသံ (TTS)",
     ttsDashboardSubtitle: "အသံထွက်ရန် အသံမော်ဒယ်တစ်ခုကို ရွေးချယ်ပါ။",
@@ -327,6 +347,7 @@ const translations = {
     ttsGenerateButton: "အသံထွက်ရန်",
     ttsResultHeader: "ထုတ်လုပ်ထားသော အသံ",
     ttsLoadingPlaceholder: "ခေတ္တစောင့်ပါ....",
+    ttsExampleText: "နမူနာ စာသား",
     ttsGender: "ကျား/မ",
     ttsMale: "ကျား",
     ttsFemale: "မ",
@@ -344,7 +365,7 @@ const translations = {
     ocrSuccessMessage: "ပုံမှ စာသားကို အောင်မြင်စွာ ထုတ်ယူပြီးပါပြီ။",
     ocrClearedMessage: "အားလုံးကို ရှင်းလင်းပြီးပါပြီ။",
     ocrFileError: "ကျေးဇူးပြု၍ ပုံဖိုင်တစ်ခု ရွေးချယ်ပါ။",
-    ocrFooter: "© 2024 AI-Powered OCR. All rights reserved.",
+    ocrFooter: "© 2025 Created by NAIIP. All rights reserved.",
     // AI Agent Dashboard
     agentPageTitle: "AI Agent Bot",
     agentPageSubtitle: "သင်၏ အထူးပြု AI လက်ထောက်များ။",
@@ -363,15 +384,19 @@ const translations = {
     agentTtsTitle: "စာသားမှ စကားပြော",
     agentTtsDesc: "သဘာဝကျသော မြန်မာအသံကို ထုတ်ပေးသည်။",
     agentNamingTitle: "နာမည်ပေးခြင်း",
-    agentNamingDesc: "ရိုးရာအစဉ်အလာအရ မြန်မာနာမည်များကို ထုတ်ပေးသည်။",
+    agentNamingDesc: "ရိုးရာအစဉ်အလာအရ မြန်မာနာမည်များကို ထုတ်လုပ်ပေးသည်။",
     agentPdfTitle: "PDF မှ အချက်အလက်ထုတ်ယူခြင်း",
     agentPdfDesc: "PDF စာရွက်စာတမ်းများမှ စာသားနှင့် အချက်အလက်များကို ထုတ်ယူပေးသည်။",
+    agentLawAITitle: "မြန်မာ့ဥပဒေ AI Chatbot",
+    agentLawAIDesc: "မြန်မာနိုင်ငံ၏ ဥပဒေရေးရာ မေးခွန်းများ မေးမြန်းရန်။",
+    agentS2sTitle: "စကားပြောမှ စကားပြော",
+    agentS2sDesc: "စကားပြောဘာသာစကားတစ်ခုကို အခြားတစ်ခုသို့ ပြန်ဆိုပေးသည်။",
     // Old Spellcheck Page
     oldSpellcheckTitle: "သတ်ပုံစစ်ခြင်း",
     oldSpellcheckSubtitle: "သတ်ပုံအမှားများကို စစ်ဆေးပေးသည်",
     oldSpellcheckResultHeader: "ပြင်ဆင်ပြီးစာသား",
     oldSpellcheckLoading: "အမှားများ စစ်ဆေးနေသည်...",
-    oldSpellcheckFooter: "© 2024 Spell Check Service. All rights reserved.",
+    oldSpellcheckFooter:  "© 2025 Created by NAIIP. All rights reserved.",
     // Summarize Page
     summarizeTitle: "မြန်မာစာ အကျဉ်းချုပ်",
     summarizeSubtitle: "စာသားရှည်များကို Gemini AI ဖြင့် အတိုချုံ့ပေးသည်",
@@ -380,9 +405,8 @@ const translations = {
     summarizeButton: "အကျဉ်းချုပ်ရန်",
     summarizeResultHeader: "အကျဉ်းချုပ်",
     summarizeLoading: "Gemini AI ဖြင့် အကျဉ်းချုပ်နေသည်...",
-    summarizeFooter: "© 2024 Gemini-Powered Summarization. All rights reserved.",
+    summarizeFooter: "© 2025 Created by NAIIP. All rights reserved.",
     // Agent OCR
-// FIX: Renamed `agentOcrTitle` to `agentOcrPageTitle` to resolve duplicate key error.
     agentOcrPageTitle: "မြန်မာ OCR (Gemini)",
     agentOcrSubtitle: "ပုံများမှ မြန်မာစာသားများကို AI ဖြင့် ထုတ်ယူပါ",
     agentOcrUploadImageLabel: "၁. ဓာတ်ပုံထည့်သွင်းပါ",
@@ -461,7 +485,6 @@ const translations = {
     agentNameErrorPrompt: "မွေးသက္ကရာဇ်၊ ကျား/မ နှင့် စာလုံးအရေအတွက် (အနည်းဆုံး ၁) ကို ရွေးချယ်ရန် လိုအပ်ပါသည်။",
     agentNameErrorApi: "နာမည်ထုတ်လုပ်မှု အမှား:",
     // Agent PDF Extractor
-// FIX: Renamed `agentPdfTitle` to `agentPdfPageTitle` to resolve duplicate key error.
     agentPdfPageTitle: "AI PDF မှ အချက်အလက်ထုတ်ယူခြင်း (မြန်မာ)",
     agentPdfSubtitle: "*** VPN ခံပြီးမှသာ အသုံးပြုပေးပါရန် ***",
     agentPdfUploadLabel: "PDF တင်ရန် (အများဆုံး ~10MB)",
@@ -482,6 +505,19 @@ const translations = {
     agentPdfExtractButton: "အကြောင်းအရာ ထုတ်ယူပါ",
     agentPdfDownloadButton: "Word ဖိုင် (.doc) ဒေါင်းလုဒ်လုပ်ပါ",
     agentPdfResultPlaceholder: "ထုတ်ယူထားသော အကြောင်းအရာ ဤနေရာတွင် ပေါ်လာမည်...",
+    // Law AI Chatbot
+    agentLawAIPageTitle: "မြန်မာ့ဥပဒေ AI Chat Bot",
+    agentLawAIWelcome: "မင်္ဂလာပါ! ကျွန်တော်က မြန်မာ့ဥပဒေရေးရာ AI Chat Bot ပါ။ မြန်မာနိုင်ငံ၏ ဥပဒေများနှင့် ပတ်သက်၍ မေးမြန်းနိုင်ပါတယ်ခင်ဗျာ။",
+    agentLawAIPlaceholder: "ဥပဒေရေးရာ မေးခွန်းများ မေးမြန်းပါ...",
+    agentLawAIError: "တောင်းပန်ပါတယ်၊ အမှားတစ်ခုဖြစ်သွားလို့ပါ။ ခဏနေ ပြန်ကြိုးစားပေးပါ။",
+    // Agent Speech to Speech
+    agentS2sPageTitle: "စကားပြောမှ စကားပြော ဘာသာပြန်ခြင်း",
+    agentS2sPageSubtitle: "သင်၏အသံကို Gemini သုံး၍ ဘာသာစကားတစ်ခုမှ အခြားတစ်ခုသို့ ပြန်ဆိုပါ။",
+    agentS2sProcessButton: "စကားပြော ဘာသာပြန်ရန်",
+    agentS2sProcessingButton: "ဘာသာပြန်နေသည်...",
+    agentS2sTranscription: "စာသားမှတ်တမ်း",
+    agentS2sTranslation: "ဘာသာပြန်စာသား",
+    agentS2sResultHeader: "ဘာသာပြန်ပြီး အသံ",
   }
 };
 

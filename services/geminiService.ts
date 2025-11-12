@@ -1,4 +1,4 @@
-import { GoogleGenAI, Type } from "@google/genai";
+import { GoogleGenAI, Type, Modality } from "@google/genai";
 import { Correction } from '../types';
 
 // Helper function to convert a File object to a base64 string and format for the API
@@ -107,15 +107,15 @@ export const extractTextFromImage = async (imageFile: Blob): Promise<string> => 
             contents: {
                 parts: [
                     imagePart,
-                    { text: "Extract all Burmese text from this image. If no text is found, return an empty response." }
+                    { text: "Extract all Burmese and English text from this image. If no text is found, return an empty response." }
                 ]
             },
             config: {
-                systemInstruction: "You are an expert OCR tool for the Burmese language. Your task is to accurately extract any and all text from the provided image and return only the extracted text."
+                systemInstruction: "You are an expert OCR tool for both Burmese and English languages. Your task is to accurately extract any and all text from the provided image and return only the extracted text."
             }
         });
 
-        return response.text.trim();
+        return response.text?.trim() || '';
 
     } catch (error) {
         console.error("Error during OCR with Gemini:", error);
@@ -338,3 +338,147 @@ export const processPdfWithGemini = async ({ pdfFile, mode }: PdfProcessingParam
         throw new Error("An unknown error occurred during PDF processing.");
     }
 };
+
+
+// --- Start of new code for Speech-to-Speech ---
+
+// Helper to decode base64 string to Uint8Array
+function decodeBase64(base64: string): Uint8Array {
+    const binaryString = atob(base64);
+    const len = binaryString.length;
+    const bytes = new Uint8Array(len);
+    for (let i = 0; i < len; i++) {
+        bytes[i] = binaryString.charCodeAt(i);
+    }
+    return bytes;
+}
+
+// Helper to write string to DataView for WAV header
+const writeStringForWav = (view: DataView, offset: number, string: string) => {
+    for (let i = 0; i < string.length; i++) {
+        view.setUint8(offset + i, string.charCodeAt(i));
+    }
+};
+
+// Helper to convert raw PCM data to a WAV Blob
+const pcmToWav = (pcmData: Uint8Array, sampleRate: number): Blob => {
+    const bitDepth = 16;
+    const numChannels = 1;
+    const bytesPerSample = bitDepth / 8;
+    const blockAlign = numChannels * bytesPerSample;
+    const byteRate = sampleRate * blockAlign;
+    const dataSize = pcmData.byteLength;
+
+    const buffer = new ArrayBuffer(44 + dataSize);
+    const view = new DataView(buffer);
+
+    // RIFF header
+    writeStringForWav(view, 0, "RIFF");
+    view.setUint32(4, 36 + dataSize, true);
+    writeStringForWav(view, 8, "WAVE");
+
+    // "fmt " sub-chunk
+    writeStringForWav(view, 12, "fmt ");
+    view.setUint32(16, 16, true);
+    view.setUint16(20, 1, true); // PCM
+    view.setUint16(22, numChannels, true);
+    view.setUint32(24, sampleRate, true);
+    view.setUint32(28, byteRate, true);
+    view.setUint16(32, blockAlign, true);
+    view.setUint16(34, bitDepth, true);
+
+    // "data" sub-chunk
+    writeStringForWav(view, 36, "data");
+    view.setUint32(40, dataSize, true);
+
+    // Write PCM data
+    for (let i = 0; i < dataSize; i++) {
+        view.setUint8(44 + i, pcmData[i]);
+    }
+
+    return new Blob([view], { type: "audio/wav" });
+};
+
+
+/**
+ * Generates speech from text using Gemini TTS model.
+ * @param text The text to synthesize.
+ * @returns A Blob containing the WAV audio data.
+ */
+export const generateSpeechGemini = async (text: string): Promise<Blob> => {
+    try {
+        const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+        
+        // Using a generic voice, as specific language voices are handled by the model.
+        const voiceName = 'Kore'; 
+
+        const response = await ai.models.generateContent({
+            model: "gemini-2.5-flash-preview-tts",
+            contents: [{ parts: [{ text }] }],
+            config: {
+                responseModalities: [Modality.AUDIO],
+                speechConfig: {
+                    voiceConfig: {
+                      prebuiltVoiceConfig: { voiceName },
+                    },
+                },
+            },
+        });
+
+        const base64Audio = response.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data;
+        if (!base64Audio) {
+            throw new Error("API did not return audio data from TTS model.");
+        }
+        
+        const pcmData = decodeBase64(base64Audio);
+        // Per Gemini docs, the TTS sample rate is 24000 Hz.
+        const audioBlob = pcmToWav(pcmData, 24000);
+        return audioBlob;
+
+    } catch (error) {
+        console.error("Error during Gemini TTS generation:", error);
+        if (error instanceof Error) {
+            throw new Error(`Failed to generate speech: ${error.message}`);
+        }
+        throw new Error("An unknown error occurred during speech generation.");
+    }
+};
+
+export interface SpeechToSpeechResult {
+    audioUrl: string;
+    transcription: string;
+    translation: string;
+}
+
+/**
+ * Performs a full speech-to-speech translation pipeline using Gemini.
+ * @param audioFile The source audio as a Blob.
+ * @param sourceLang The source language ('Burmese' or 'English').
+ * @param targetLang The target language ('Burmese' or 'English').
+ * @returns An object containing the translated audio URL, transcription, and translation text.
+ */
+export const speechToSpeechTranslate = async (audioFile: Blob, sourceLang: string, targetLang: string): Promise<SpeechToSpeechResult> => {
+    try {
+        // Step 1: Transcribe the audio file to text.
+        const transcription = await transcribeAudioGemini(audioFile);
+        if (!transcription) throw new Error("Transcription step failed: returned empty text.");
+        
+        // Step 2: Translate the transcribed text.
+        const translation = await translateTextGemini(transcription, sourceLang, targetLang);
+        if (!translation) throw new Error("Translation step failed: returned empty text.");
+        
+        // Step 3: Synthesize the translated text into speech.
+        const audioBlob = await generateSpeechGemini(translation);
+        const audioUrl = URL.createObjectURL(audioBlob);
+
+        return { audioUrl, transcription, translation };
+
+    } catch (error) {
+        console.error("Error during Speech-to-Speech translation pipeline:", error);
+        if (error instanceof Error) {
+            throw new Error(`Speech-to-Speech failed: ${error.message}`);
+        }
+        throw new Error("An unknown error occurred during the speech-to-speech process.");
+    }
+};
+// --- End of new code for Speech-to-Speech ---

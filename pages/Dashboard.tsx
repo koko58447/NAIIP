@@ -15,7 +15,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
         <div className="p-4 sm:p-6 lg:p-8">
             <div className="max-w-4xl mx-auto">
                 <div className="text-center mb-12">
-                     <h1 className="text-3xl sm:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 leading-normal pb-3 to-teal-500">
+                     <h1 className="text-3xl sm:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 leading-normal p-3 to-teal-500">
                         {t('dashboardTitle')}
                     </h1>
                     <p className="text-gray-400 mt-4 text-lg">{t('dashboardSubtitle')}</p>

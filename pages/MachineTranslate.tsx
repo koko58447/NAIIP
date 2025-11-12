@@ -19,6 +19,24 @@ const MachineTranslate: React.FC<MachineTranslateProps> = ({ onNavigateBack }) =
     const [error, setError] = useState<string | null>(null);
     const [justCopied, setJustCopied] = useState<boolean>(false);
 
+    const myanmarExamples = [
+      "မင်္ဂလာပါခင်ဗျာ။ ကြိုဆိုပါတယ်။",
+      "ဒီပြဿနာကို ဖြေရှင်းဖို့ ဘယ်လိုနည်းလမ်းတွေရှိလဲ။",
+      "ဒီနှစ်ရဲ့ရာသီဥတုက တော်တော်ပူတယ်။"
+    ];
+
+    const englishExamples = [
+      "What is the capital city of Myanmar?",
+      "Please close the door quietly when you leave.",
+      "They will be arriving at the station tomorrow afternoon."
+    ];
+
+    const handleExampleClick = (text: string) => {
+        setInputText(text);
+        setResult(null);
+        setError(null);
+    };
+
     const handleTranslate = useCallback(async () => {
         if (!inputText.trim() || isLoading) return;
 
@@ -84,7 +102,7 @@ const MachineTranslate: React.FC<MachineTranslateProps> = ({ onNavigateBack }) =
                     <button onClick={onNavigateBack} className="absolute left-0 top-1/2 -translate-y-1/2 p-2 rounded-full hover:bg-gray-700 transition-colors" aria-label={t('backToDashboard')}>
                         <ArrowLeftIcon className="w-6 h-6" />
                     </button>
-                    <h1 className="text-3xl sm:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-teal-500">
+                    <h1 className="text-3xl sm:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 p-3 to-teal-500">
                         {t('mtPageTitle')}
                     </h1>
                     <p className="text-gray-400 mt-2">{t('mtPageSubtitle')}</p>
@@ -101,6 +119,20 @@ const MachineTranslate: React.FC<MachineTranslateProps> = ({ onNavigateBack }) =
                             placeholder={direction === 'my-en' ? t('mtPlaceholderMy') : t('mtPlaceholderEn')}
                             className="w-full h-48 p-4 bg-gray-800/60 border border-gray-700 rounded-xl resize-none focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-colors"
                         />
+                        <div className="mt-4">
+                            <h4 className="text-sm font-medium text-gray-400 mb-2">{t('mtExampleText')}</h4>
+                            <div className="flex flex-wrap gap-2">
+                                {(direction === 'my-en' ? myanmarExamples : englishExamples).map((example, index) => (
+                                    <button
+                                        key={index}
+                                        onClick={() => handleExampleClick(example)}
+                                        className="px-3 py-1 bg-gray-700 text-gray-300 text-xs rounded-full hover:bg-cyan-600 hover:text-white transition-colors"
+                                    >
+                                        {example}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
                     </div>
 
                     {/* Output Area */}

@@ -55,6 +55,32 @@ const OldSpellcheck: React.FC<OldSpellcheckProps> = ({ onNavigateBack }) => {
     const [corrections, setCorrections] = useState<Correction[]>([]);
     const [justCopied, setJustCopied] = useState(false);
     
+    // --- Example List Data ---
+    const examples = [
+      "ဓို့နောက် ပြည်နှင်လွှဲပြောင်းပေးအပ်ပွဲကိုကျင်းပရာ ကရင်ပြည်နယ်အစိုးရအဖွဲ့၊",
+      "ဒွေ့ဆုံပွဲသို့ ပြည်ထောင်စုရွေးကောက်ပွဲကော်မရှင်ရုံး၊",
+      "အဲတီပမာဏရှိတယ်၊ အဲဒီလို သွေးရည်ကြည်လည်းလှူဖို့ ကျန်းမာရေးအခြေအနေလည်း",
+      "တီမိုကရေစီနှင့် ဖက်ဒရယ်စနစ်ကိုအခြေခံသည့်",
+      "ရခုပင်လျှင် ငွေကြေးတတ်နိုင်သူတို့က",
+      "ဓိခိုက်ဒဏ်ရာရရှိခြင်းအပါအဝင်",
+      "ရင်းနောက် မြန်မာနိုင်ငံဆေးကောင်စီအတွင်းရေးမှူး၊",
+      "ယက်သတ္တပတ်လှုပ်ရှားမှုသည် ပြည်သူများ",
+      "အဗြန်အလှန် ဆွေးနွေးမှုအပိုင်းတွင်",
+      "ခြည့်ရှုအားပေး ခဲ့သည်",
+      "ဒွေ့ဆုံစဉ် ပြည်ထောင်စုဝန်ကြီး ဦးခင်ရီက",
+      "နိုင်ငံဒော်သံဃမဟာနာယကအဖွဲ့ဥက္ကဋ္ဌ",
+      "ဇိုက်ပျိုးသီးနှံများနှင့်ပတ်သက်၍ မြေကို",
+      "အကု နောက်ပေါ် တယ်လီနောကတော့",
+    ];
+    // ---------------------------
+
+    const handleExampleClick = (text: string) => {
+        setInputText(text);
+        setDisplayedText('');
+        setCorrections([]);
+        setError(null);
+    };
+
     const handleCorrect = useCallback(async () => {
         if (!inputText.trim() || isLoading) return;
 
@@ -136,7 +162,7 @@ const OldSpellcheck: React.FC<OldSpellcheckProps> = ({ onNavigateBack }) => {
                     <button onClick={onNavigateBack} className="absolute left-0 top-1/2 -translate-y-1/2 p-2 rounded-full hover:bg-gray-700 transition-colors" aria-label={t('backToDashboard')}>
                         <ArrowLeftIcon className="w-6 h-6" />
                     </button>
-                    <h1 className="text-3xl sm:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-teal-500">
+                    <h1 className="text-3xl sm:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 p-3 to-teal-500">
                         {t('oldSpellcheckTitle')}
                     </h1>
                     <p className="text-gray-400 mt-2">{t('oldSpellcheckSubtitle')}</p>
@@ -151,6 +177,21 @@ const OldSpellcheck: React.FC<OldSpellcheckProps> = ({ onNavigateBack }) => {
                         placeholder={t('spellcheckPlaceholder')}
                         className="w-full h-64 p-4 bg-gray-800/60 border border-gray-700 rounded-xl resize-y focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-colors text-lg"
                     />
+                </div>
+
+                <div className="w-full space-y-3">
+                    <h3 className="text-lg font-medium text-gray-300">{t('spellcheckExampleText')}</h3>
+                    <div className="flex flex-wrap gap-2 p-3 bg-gray-800/50 border border-gray-700 rounded-xl">
+                        {examples.map((example, index) => (
+                            <button
+                                key={index}
+                                onClick={() => handleExampleClick(example)}
+                                className="px-3 py-1.5 bg-gray-700 text-gray-300 text-sm rounded-full hover:bg-cyan-600 hover:text-white transition-colors"
+                            >
+                                {example}
+                            </button>
+                        ))}
+                    </div>
                 </div>
 
                 <div className="flex items-center justify-center">

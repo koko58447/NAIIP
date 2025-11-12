@@ -19,10 +19,18 @@ const TTSModel1: React.FC<TTSModel1Props> = ({ onNavigateBack }) => {
     // New state for controls
     const [removeSilence, setRemoveSilence] = useState(true);
     const [speed, setSpeed] = useState(1.0);
-    const [phraseLimit, setPhraseLimit] = useState(50);
+    const [phraseLimit, setPhraseLimit] = useState(8);
     
     const originalTextRef = useRef('');
     const modelDisplayName = t('ttsModel1Name');
+
+    const exampleText = "သဘာဝအမှန်ကိုသိသော နက်နဲသော၊ သစ္စာလေးပါးကိုပင် မြင်နိုင်သောဉာဏ်ကို သမ္မာဒိဋ္ဌိဟု ဆိုအပ်ပါတယ် ။ ကာမဂုဏ်အာရုံနဲ့ ကင်းကင်းရှင်းရှင်းနေတဲ့အတွေး ၊ မေတ္တာ ကရုဏာအလှဆင်တဲ့ အတွေးဆိုတဲ့ ဂုဏ်သိက္ခာရှိတဲ့ အတွေးမျိုးကို သမ္မာသင်္ကပ္ပ အတွေးလို့ခေါ်ရမှာဖြစ်တယ်။ သူတော်ကောင်းတွေ ချီးမွမ်းအပ်သည့် မှန်ကန်သောစကားမျိုးကိုသာ ပြောပါ။ တရားဓမ္မကို ရှင်းပြသည့်စကားသည် စကားဟူသမျှတွင် အကောင်းဆုံးစကား ဖြစ်ပါသည်။";
+
+    const handleExampleClick = (text: string) => {
+        setInputText(text);
+        setResult(null);
+        setError(null);
+    };
 
     const handleGenerate = useCallback(async () => {
         if (!inputText.trim() || isLoading) return;
@@ -58,7 +66,7 @@ const TTSModel1: React.FC<TTSModel1Props> = ({ onNavigateBack }) => {
                     <button onClick={onNavigateBack} className="absolute left-0 top-1/2 -translate-y-1/2 p-2 rounded-full hover:bg-gray-700 transition-colors" aria-label={t('backToTTS')}>
                         <ArrowLeftIcon className="w-6 h-6" />
                     </button>
-                    <h1 className="text-3xl sm:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 leading-relaxed to-teal-500 pb-2">
+                    <h1 className="text-3xl sm:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 leading-relaxed to-teal-500 p-3">
                         {t('ttsModelTitlePrefix')} {modelDisplayName}
                     </h1>
                 </div>
@@ -72,6 +80,18 @@ const TTSModel1: React.FC<TTSModel1Props> = ({ onNavigateBack }) => {
                         className="w-full h-48 p-4 bg-gray-800/60 border border-gray-700 rounded-xl resize-y focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-colors text-lg"
                         readOnly={isLoading}
                     />
+                </div>
+
+                <div className="w-full space-y-2">
+                    <h3 className="text-lg font-medium text-gray-300">{t('ttsExampleText')}</h3>
+                    <div 
+                        onClick={() => handleExampleClick(exampleText)}
+                        className="p-4 bg-gray-800/60 border border-gray-700 rounded-xl cursor-pointer hover:bg-gray-700/70 transition-colors"
+                        role="button"
+                        aria-label="Use example text"
+                    >
+                        <p className="text-gray-400 text-base leading-relaxed">{exampleText}</p>
+                    </div>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 bg-gray-800/50 p-4 rounded-xl border border-gray-700">
